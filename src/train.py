@@ -37,8 +37,8 @@ print("Val size:", len(val_dataset)) # Some basic stats
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True) # This gives the model 32 images at a time and shuffling to mix training images even more
 val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
 
-model = BasicCNN(num_classes=2) # Comment out line depending on whicih model to train
-# model = get_resnet18(num_classes=2)
+#model = BasicCNN(num_classes=2) # Comment out line depending on whicih model to train
+model = get_resnet18(num_classes=2)
 
 model = model.to(torch.device("cpu")) # Training on cpu
 
@@ -120,5 +120,5 @@ for epoch in range(num_epochs): # Loop through 10 epochs
 
     if val_acc > best_val_acc: # We save the model when the validation accuracy improves
         best_val_acc = val_acc
-        torch.save(model.state_dict(), "models/basic_cnn.pth") # We are saving the weights instead of the pull python object 
+        torch.save(model.state_dict(), "models/resnet18.pth") # We are saving the weights instead of the pull python object 
         print("  Saved best model")
