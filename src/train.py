@@ -48,6 +48,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001) # We use adam to upda
 
 def train_one_epoch(model, loader): # This trains the model once through the training dataset 
     model.train() 
+    correct = 0
     total_loss = 0 # These track performance during each epoch
     total = 0
 
