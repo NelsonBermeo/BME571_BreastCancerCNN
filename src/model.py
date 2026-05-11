@@ -51,3 +51,37 @@ def get_resnet18(num_classes=2): # Pretrained model
     model.fc = nn.Linear(model.fc.in_features, num_classes) #Replace final layer with our 2 classes
 
     return model
+
+class BasicCNN(nn.Module): 
+    def __init__(self, num_classes=2): 
+        super().__init__() 
+
+        self.features = nn.Sequential( 
+            # Layer 1 - 
+            nn.Conv2d(3, 32, kernel_size=3, padding=1), 
+            nn.ReLU(), 
+            nn.MaxPool2d(2), 
+
+            # Layer 2 - 
+            nn.Conv2d(32, 64, kernel_size=3, padding=1), 
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+
+            # Layer 3 - 
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(), 
+            nn.MaxPool2d(2),
+        )
+
+        self.classifier = nn.Sequential( 
+            nn.Flatten(), 
+            nn.Linear(128 * 28 * 28, 256), 
+            nn.ReLU(), 
+            nn.Dropout(0.5), 
+            nn.Linear(256, num_classes),
+        )
+        
+    def forward(self, x):
+        x = self.features(x) 
+        x = self.classifier(x)
+        return x
